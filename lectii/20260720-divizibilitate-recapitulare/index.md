@@ -41,3 +41,17 @@ Se observă că doar într-unul ($3k+2$ și $k=0$) se poate ca $a,b,c$ să fie p
 ## Temă
 
 Continuarea de la 7 pînă la 16.
+
+## Zone de îmbunătățit
+
+### Regula bazelor diferit cu exponent egal $(a \cdot b)^n = a^n \cdot b^n$
+
+### Factor comun
+
+$a \cdot f + f$ unde $f$ este o sumă.
+
+$a \cdot (f_1 + \ldots + f_n) +  f_1 + \ldots + f_n$
+
+Aici putem introduce o parenteză pentru a avea forma de factor comun.
+
+E un truc subtil dar eficient.
