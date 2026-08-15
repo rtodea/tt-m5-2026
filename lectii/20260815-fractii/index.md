@@ -94,4 +94,4 @@ Vom face împreună de la lecția anterioară:
 
 ### (manual Corint/p76)
 
-![alt text](../20260815-fractii/image-5.png)
+![alt text](../20260814-fractii/image-5.png)
