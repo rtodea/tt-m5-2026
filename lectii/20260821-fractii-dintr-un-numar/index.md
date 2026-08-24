@@ -20,6 +20,12 @@ $$
 p \% \text{ din } n= \frac{p}{100} \cdot n
 $$
 
-### (manual ArtKlett/p136)
+### (manual ArtKlett/p134)
 
 ![alt text](image.png)
+
+## Temă
+
+### (manual ArtKlett/p134) Probleme propuse
+
+![alt text](image-1.png)
