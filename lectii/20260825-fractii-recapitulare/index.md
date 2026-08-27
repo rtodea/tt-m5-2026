@@ -13,8 +13,13 @@
 ### Pr 27 (d)
 
 $$
-\prod_1^{49} 1 - \frac{1}{n+1}
+\prod_{1}^{49}\left(1 - \frac{1}{n+1}\right) = \prod_{1}^{49} \frac{n}{n+1}
 $$
+
+$$ 
+\prod_{n=1}^{49} \frac{n}{n+1} = \frac{1}{2} \cdot \frac{2}{3} \cdot \frac{3}{4} \dots \frac{48}{49} \cdot \frac{49}{50} = \frac{1}{50}
+$$
+
 
 ### Pr. 28
 
