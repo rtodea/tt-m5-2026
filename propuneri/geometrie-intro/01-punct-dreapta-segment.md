@@ -106,6 +106,9 @@ dezvoltăm"): 4 exerciții alese de acolo, plus:
 *Angle of 60°*, *Perpendicular Bisector*, *Midpoint*. Fără explicații înainte — se descurcă
 singur, asta e ideea. Scorul din joc (L și E) se notează, ca să aibă ce bate data viitoare.
 
+> Restul resurselor online — Mathigon în română, Polypad, GeoGebra — sunt în
+> [`../resurse-online.md`](../resurse-online.md).
+
 ## Note pentru Robert
 
 - Dacă la problema 3 se blochează, nu-i da ecuația. Pune-l să încerce $n = 6$ (15 segmente, prea
