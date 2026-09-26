@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aria triunghiului — trage de vârfuri</title>
+<link rel="stylesheet" href="lib/jsxgraph.css">
+<script src="lib/jsxgraphcore.js"></script>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+         max-width: 900px; margin: 24px auto; padding: 0 16px; color: #222; }
+  h1 { font-size: 1.4rem; margin-bottom: 4px; }
+  p.sub { color: #666; margin-top: 0; }
+  #box { width: 100%; height: 520px; border: 1px solid #ccc; border-radius: 6px; }
+  .panel { display: flex; gap: 28px; flex-wrap: wrap; margin: 14px 0 6px; font-size: 1.05rem; }
+  .panel b { font-variant-numeric: tabular-nums; }
+  .hint { background: #f4f7fb; border-left: 4px solid #4a7fd0; padding: 10px 14px;
+          margin-top: 16px; border-radius: 0 4px 4px 0; }
+  .hint h2 { font-size: 1rem; margin: 0 0 6px; }
+  ol { margin: 6px 0 0 0; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<h1>Aria triunghiului</h1>
+<p class="sub">Trage de punctele <b>A</b>, <b>B</b> și <b>C</b>.</p>
+
+<div id="box"></div>
+
+<div class="panel">
+  <span>baza <b>b</b> = <b id="b">–</b></span>
+  <span>înălțimea <b>h</b> = <b id="h">–</b></span>
+  <span>aria dreptunghiului = <b id="ad">–</b></span>
+  <span>aria triunghiului = <b id="at">–</b></span>
+</div>
+
+<div class="hint">
+  <h2>De încercat, în ordine</h2>
+  <ol>
+    <li>Trage de <b>C</b> oriunde. Uită-te ce se întâmplă cu aria triunghiului față de aria
+      dreptunghiului. Ce fracție e mereu?</li>
+    <li>Acum trage de <b>C</b> <em>de-a lungul liniei punctate portocalii</em>, care e paralelă
+      cu baza. Triunghiul se deformează complet — dar ce număr <b>nu</b> se schimbă? De ce?</li>
+    <li>Fă triunghiul foarte turtit, apoi foarte ascuțit. Găsești o poziție a lui <b>C</b> în
+      care aria să fie zero?</li>
+  </ol>
+</div>
+
+<script>
+(function () {
+  var board = JXG.JSXGraph.initBoard('box', {
+    boundingbox: [-2, 7.5, 12, -2.5],
+    axis: false,
+    keepaspectratio: true,
+    showCopyright: false,
+    showNavigation: false,
+    pan: { enabled: false },
+    zoom: { wheel: false }
+  });
+
+  var LBL = { fontSize: 18, offset: [8, 8] };
+
+  var A = board.create('point', [0, 0],
+    { name: 'A', size: 5, strokeColor: '#1b4b8f', fillColor: '#3f7fd6', label: LBL });
+  var B = board.create('point', [8, 0],
+    { name: 'B', size: 5, strokeColor: '#1b4b8f', fillColor: '#3f7fd6', label: LBL });
+  var C = board.create('point', [5.5, 4.5],
+    { name: 'C', size: 5, strokeColor: '#a03000', fillColor: '#e07a30', label: LBL });
+
+  // dreapta bazei si piciorul inaltimii
+  var ab = board.create('line', [A, B], { strokeColor: '#bbb', strokeWidth: 1,
+             straightFirst: true, straightLast: true });
+  var foot = board.create('perpendicularpoint', [ab, C],
+             { name: '', size: 2, strokeColor: '#e07a30', fillColor: '#e07a30' });
+
+  // dreptunghiul de baza b si inaltime h
+  function shifted(P) {
+    return board.create('point', [
+      function () { return P.X() + (C.X() - foot.X()); },
+      function () { return P.Y() + (C.Y() - foot.Y()); }
+    ], { visible: false });
+  }
+  var A2 = shifted(A), B2 = shifted(B);
+
+  var rect = board.create('polygon', [A, B, B2, A2], {
+    fillColor: '#4a7fd0', fillOpacity: 0.12,
+    borders: { strokeColor: '#4a7fd0', strokeWidth: 1, dash: 2 },
+    vertices: { visible: false }
+  });
+
+  var tri = board.create('polygon', [A, B, C], {
+    fillColor: '#e07a30', fillOpacity: 0.35,
+    borders: { strokeColor: '#a03000', strokeWidth: 2.5 },
+    vertices: { visible: false }
+  });
+
+  // inaltimea
+  board.create('segment', [C, foot], { strokeColor: '#a03000', strokeWidth: 2, dash: 3 });
+  board.create('text', [
+    function () { return (C.X() + foot.X()) / 2 + 0.18; },
+    function () { return (C.Y() + foot.Y()) / 2; },
+    'h'
+  ], { fontSize: 17, color: '#a03000' });
+
+  board.create('text', [
+    function () { return (A.X() + B.X()) / 2; },
+    function () { return (A.Y() + B.Y()) / 2 - 0.45; },
+    'b'
+  ], { fontSize: 17, color: '#1b4b8f', anchorX: 'middle' });
+
+  // linia pe care aria nu se schimba
+  board.create('parallel', [ab, C], { strokeColor: '#e07a30', strokeWidth: 1.5, dash: 2,
+    highlight: false });
+
+  function dist(P, Q) {
+    return Math.hypot(P.X() - Q.X(), P.Y() - Q.Y());
+  }
+  function fmt(x) { return x.toFixed(2).replace('.', ','); }
+
+  function refresh() {
+    var b = dist(A, B), h = dist(C, foot);
+    document.getElementById('b').textContent  = fmt(b);
+    document.getElementById('h').textContent  = fmt(h);
+    document.getElementById('ad').textContent = fmt(b * h);
+    document.getElementById('at').textContent = fmt(b * h / 2);
+  }
+
+  board.on('update', refresh);
+  refresh();
+})();
+</script>
+
+</body>
+</html>
