@@ -1,4 +1,4 @@
 .idea
 .claude
 *.un~
-
+.DS_Store
